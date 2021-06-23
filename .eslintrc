@@ -75,6 +75,8 @@
       }
     ],
     "jsx-a11y/href-no-hash": "off",
+    "@next/next/no-img-element": "off",
+
     "jsx-a11y/anchor-is-valid": [
       "warn",
       {
