@@ -15,7 +15,7 @@ export async function getServerSideProps(context) {
 
 export default function Home({ products }) {
   return (
-    <div className="bg-gray-100">
+    <div>
       <Head>
         <title>Next Amazon</title>
       </Head>

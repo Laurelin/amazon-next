@@ -1,9 +1,9 @@
 import Product from './product';
 
 export default function ProductFeed({ products }) {
-  products.map((product) => console.log('product ', product));
   return (
-    <div className="grid grid-flow-row-dense md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:-mt-52 mx-auto">
+    // something went very screwy somewhere and lg:grid-cols-3 and lg:grid-cols-1 are switched.
+    <div className="grid grid-flow-row-dense md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-4 md:-mt-52 mx-auto">
       {products.slice(0, 4).map(({ id, title, price, description, category, image }) => (
         <Product
           key={id}
