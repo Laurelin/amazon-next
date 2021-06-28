@@ -10,6 +10,7 @@ export const basketSlice = createSlice({
   reducers: {
     addToBasket: (state, action) => {
       state.items = [...state.items, action.payload];
+      localStorage.setItem('basket', JSON.stringify(state.items));
     },
     removeFromBasket: (state, action) => {
       const index = state.items.findIndex((basketItem) => basketItem.id === action.payload.id);
@@ -22,6 +23,7 @@ export const basketSlice = createSlice({
         console.warn(`Cannot remove product (id: ${action.payload.id}; not in basket )`);
       }
       state.items = newBasket;
+      localStorage.setItem('basket', JSON.stringify(state.items));
     }
   }
 });

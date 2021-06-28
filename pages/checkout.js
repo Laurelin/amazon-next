@@ -3,14 +3,33 @@ import Image from 'next/image';
 import { useSelector } from 'react-redux';
 import Currency from 'react-currency-formatter';
 import { useSession } from 'next-auth/client';
+import { loadStripe } from '@stripe/stripe-js';
+import axios from 'axios';
 import Header from '../components/header';
 import { selectItems, selectTotal } from '../slices/basket-slice';
 import CheckoutProduct from '../components/checkoutProduct';
+
+const stripePromise = loadStripe(process.env.stripe_public_key);
 
 export default function Checkout() {
   const items = useSelector(selectItems);
   const total = useSelector(selectTotal);
   const [session] = useSession();
+
+  const createCheckoutSession = async () => {
+    const stripe = await stripePromise;
+
+    const checkoutSession = await axios.post('/api/create-checkout-session', {
+      items,
+      email: session.user.email
+    });
+
+    const result = await stripe.redirectToCheckout({
+      sessionId: checkoutSession.data.id
+    });
+
+    if (result.error) alert(result.error.message);
+  };
 
   useEffect(() => {
     document.title = 'Amazon-checkout';
@@ -60,6 +79,8 @@ export default function Checkout() {
               </h2>
 
               <button
+                role="link"
+                onClick={createCheckoutSession}
                 disabled={!session}
                 type="button"
                 className={`button mt-2 ${
