@@ -18,8 +18,6 @@
 # misc
 .DS_Store
 *.pem
-permissions.json
-stripe.exe
 
 # debug
 npm-debug.log*
