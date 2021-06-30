@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { MenuIcon, SearchIcon, ShoppingCartIcon } from '@heroicons/react/outline';
 import { ChevronDownIcon } from '@heroicons/react/solid';
-import { signIn, signOut, useSession } from 'next-auth/client';
+import { getSession, signIn, signOut, useSession } from 'next-auth/client';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { selectItems } from '../slices/basket-slice';
@@ -52,10 +52,10 @@ export default function Header() {
               </div>
             </button>
           </div>
-          <div className=" link">
+          <button type="button" onClick={() => router.push('/orders')} className="link">
             <p>Returns</p>
             <p className="font-bold md:text-sm">& Orders</p>
-          </div>
+          </button>
           <button
             type="button"
             onClick={() => router.push('/checkout')}

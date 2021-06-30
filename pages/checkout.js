@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useSelector } from 'react-redux';
 import Currency from 'react-currency-formatter';
-import { useSession } from 'next-auth/client';
+import { getSession, useSession } from 'next-auth/client';
 import { loadStripe } from '@stripe/stripe-js';
 import axios from 'axios';
 import Header from '../components/header';
@@ -10,6 +10,16 @@ import { selectItems, selectTotal } from '../slices/basket-slice';
 import CheckoutProduct from '../components/checkoutProduct';
 
 const stripePromise = loadStripe(process.env.stripe_public_key);
+
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  return {
+    props: {
+      session
+    }
+  };
+}
 
 export default function Checkout() {
   const items = useSelector(selectItems);
@@ -51,7 +61,7 @@ export default function Checkout() {
 
           <div className="flex flex-col space-y-10 p-5 bg-white">
             <h1 className="text-3xl border-b pb-4">
-              {items.length === 0 ? 'Your Amazon Basket is empty' : 'Shopping Basket'}
+              {items.length === 0 ? 'Your Amazon Shopping Cart is empty' : 'Shopping Cart'}
             </h1>
             {items.map((item, i) => (
               <CheckoutProduct
