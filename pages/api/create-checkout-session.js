@@ -50,7 +50,6 @@ export default async function handler(req, res) {
     },
     line_items: transformedItems,
     mode: 'payment',
-    // These placeholder URLs will be replaced in a following step.
     success_url: `${process.env.HOST}/success`,
     cancel_url: `${process.env.HOST}/checkout`,
     metadata: {
